@@ -1,0 +1,17 @@
+{
+  "name": "mocha-example",
+  "version": "1.0.0",
+  "description": "A simple example of the mocha test harness",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "david@banham.id.au",
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^5.2.0"
+  }
+}
