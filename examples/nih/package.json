@@ -1,0 +1,14 @@
+{
+  "name": "nih",
+  "version": "1.0.0",
+  "description": "An example of tests with no frameworks or dependencies.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "author": "david@banham.id.au",
+  "license": "ISC"
+}
