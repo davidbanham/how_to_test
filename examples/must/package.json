@@ -1,0 +1,18 @@
+{
+  "name": "must-example",
+  "version": "1.0.0",
+  "description": "A simple example of the must assertion library",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "david@banham.id.au",
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^5.2.0",
+    "must": "^0.13.4"
+  }
+}
