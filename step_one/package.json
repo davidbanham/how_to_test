@@ -8,7 +8,7 @@
   "scripts": {
     "test": "grunt test",
     "start": "grunt serve",
-    "push": "s3cmd --no-mime-magic --guess-mime-type --config=/home/davidbanham/.s3cfg_personal sync -rM --acl-public --exclude 'git/*' ./ s3://slides.davidbanham.com/12fa_for_devs/"
+    "push": "s3cmd --no-mime-magic --guess-mime-type --config=/home/davidbanham/.s3cfg_personal sync -rM --acl-public --exclude 'git/*' ./ s3://slides.davidbanham.com/how_to_test/"
   },
   "author": {
     "name": "Hakim El Hattab",
