@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>How To Test - Step 2</title>
+
+		<meta name="description" content="Pragmatic and practical techniques for automated software testing">
+		<meta name="author" content="David Banham">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+
+    <style>
+      .badcode {
+        background: red;
+      }
+      .bettercode {
+        background: green;
+      }
+    </style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+        <aside class="controls">
+          <a href="https://crnr.io"><img class="corner-logo" src="https://crnr.io/img/orange_on_trans.svg"></img></a>
+        </aside>
+				<section>
+					<h1>How To Test - Step 2</h1>
+          <small>With <a href="https://davidbanham.com">David Banham</a></small>
+				</section>
+				<section>
+          <section>
+            <h1>Who you?</h1>
+            <a href="https://davidbanham.com">David Banham</a>
+          </section>
+          <section>
+            <p>Been writing code for about 20 years</p>
+            <p>Professionally for about 10</p>
+            <p>Have trained lots and lots of developers</p>
+          </section>
+          <section>
+            <small style="width: 200px; background: white;"><a href="http://pinion.gg"><img src="https://www.pinion.gg/img/logo.png"></a></small>
+            <p>Raised a couple million dollars</p>
+            <p>Served a billion ads</p>
+            <p>Sold the company to the head of Microsoft Ventures</p>
+          </section>
+          <section>
+            <small style="width: 400px;"><a href="http://prismatik.com.au"><img class="logo" src="prismatik_logo.png"></img></a></small>
+            <p>Built _lots_ of software for lots of clients</p>
+            <p>High scale, high performance, high reliability</p>
+          </section>
+          <section>
+            <small style="width: 400px;"><a href="https://notbad.software"><img class="logo" src="https://notbad.software/img/logo/yellow_on_trans.svg"></img></a></small>
+            <p>Simple</p>
+            <p>Robust</p>
+            <p>Effective</p>
+            <p>Bespoke</p>
+          </section>
+				</section>
+        <section>
+          <section>
+            <h2>Theory time!</h2>
+            <p class="fragment">Unit testing</p>
+            <p class="fragment">Integration testing</p>
+            <p class="fragment">Functional testing</p>
+            <aside class="notes">
+              These are interesting concepts. They are good things to know. Don't get captured by them.
+              <br><br>
+              It's easy to go down a rabbit hole with these concepts. Focus on pragmatism. Make your code safe.
+            </aside>
+          </section>
+          <section>
+            <p>Unit testing</p>
+            <h4>--> You are here <--</h4>
+            <p>Integration testing</p>
+            <p>Functional testing</p>
+            <aside class="notes">
+              The style I've been teaching you, and the one I advocate, blurs the lines a little between Unit and Integration testing.
+              <br><br>
+              Try to keep your units of functionality small and composable. Try and test any complicated bits as individual components. _Don't_ get hung up on "pure unit tests" or any of that nonsense. If you're testing a model component, don't try and write an entire SQL implementation in a mock. That's silly. If you're testing a route that exercises a model, just let it. Don't mock or spy it unless there's some really good reason to.
+            </aside>
+          </section>
+        </section>
+        <section>
+          <h2>Red, green, refactor.</h2>
+          <p>The test isn't valid until you've seen it fail</p>
+          <aside class="notes">
+            A test isn't valid until you've seen it fail _for the reason you expected it to fail_. If your hypothesis about how the test will fail is wrong, investigate why that is.
+            <br><br>
+            Do _just_ enough to make the test go green. You now know your code is correct. If you can see that there are actually more things your code needs to do, write tests for the new stuff, watch them fail, then make them green.
+            <br><br>
+            Once your tests are green, make the code better if you need to. You'll know your refactoring hasn't broken anything since the suite is still green.
+          </aside>
+        </section>
+        <section>
+          <h2>Atomicity</h2>
+          <p>Tests must not rely on each other</p>
+          <p>Tests should be able to run in parallel</p>
+          <aside class="notes">
+            A test must be able to run on its own. If it depends on state created by another test, it is brittle and will cause you grief.
+            <br><br>
+            Being able to run your suite in parallel is _awesome_. It also means you probably don't need to do a full seed and teardown of your database in between tests. That is great for speed.
+          </aside>
+        </section>
+        <section>
+          <h2>Speed</h2>
+          <p>Happiness is a < 5s suite</p>
+          <aside class="notes">
+            A slow suite is not an effective TDD tool. It makes your workflow a drag and people will stop bothering to run it.
+            <br><br>
+            Running individual tests or limited blocks can help you out while you're developing, but try not to let this be something you rely on.
+          </aside>
+        </section>
+        <section>
+          <h2>Flaky tests</h2>
+          <p>Must not be permitted to live</p>
+          <aside class="notes">
+            A flaky test is one that _sometimes_ fails. Mostly the suite is okay, or it passes fine on my machine but fails in CI, etc.
+            <br><br>
+            These must not be allowed to live. They always erode confidence in the test suite and the software. They usually indicate a bug like a race condition or dodgy error handling.
+          </aside>
+        </section>
+        <section>
+          <h2>Keep your tests dumb</h2>
+          <aside class="notes">
+            A clever test is a dangerous test. Keep your tests really simple and obvious. Keep them DRY, of course. If you get that "I'm clever" feeling while writing a test, though, it's probably a sign you shouldn't do it.
+          </aside>
+        </section>
+        <section>
+          <h2>Use your suite</h2>
+          <p>Run it lots!</p>
+          <aside class="notes">
+            Have a CI system that runs the suite on every branch, on every push. Report the status on PRs. Don't let failing tests make it into master.
+          </aside>
+        </section>
+        <section>
+          <h2>A test isn't:</h2>
+          <p class="fragment">A code review</p>
+          <p class="fragment">Foolproof</p>
+          <aside class="notes">
+            Having tests doesn't mean you don't have to review code. The test is only as good as the person who wrote it. People make mistakes writing tests just like they do writing code.
+          </aside>
+        </section>
+        <section>
+          <h2>Coverage</h2>
+          <p>It's a tool, not a rule</p>
+          <aside class="notes">
+            Knowing your coverage percentage is useful. Looking a which lines are covered and which aren't is useful. There is no magic percentage of coverage that will make your software infallible.
+            <br><br>
+            Code with 100% coverage can still be broken. Code with 0% coverage can still be correct.
+            <br><br>
+            Focus more on how your percentage changes over time than on what the actual number is.
+          </aside>
+        </section>
+        <section>
+          <small style="width: 400px;"><a href="https://crnr.io"><img class="logo" src="https://crnr.io/img/orange_on_trans.svg"></img></a></small>
+          <p><a href="https://crnr.io">crnr.io</a></p>
+          <p><a href="https://slides.davidbanham.com/how_to_test_2">slides.davidbanham.com/how_to_test_2</a></p>
+        </section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
