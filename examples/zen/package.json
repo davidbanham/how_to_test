@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Boilerplate",
   "main": "src/index.js",
-  "engines": {
-    "node": "^8.1.4"
-  },
   "scripts": {
     "start": "/usr/bin/env node ./bin/server",
     "test": "mocha --reporter spec",
