@@ -1,5 +1,13 @@
 const db = [];
 
+const pusher = payload => {
+  if (typeof payload.number !== "number") {
+    return new Error("You dun goofed");
+  }
+  db.push(payload);
+  return null
+}
+
 module.exports = {
   calcAccel: (first, second) => {
     const deltaV = second.velocity - first.velocity;
@@ -7,7 +15,10 @@ module.exports = {
     return deltaV / deltaT;
   },
   recordTelemetry: (packet) => {
-    db.push(packet);
+    const err = pusher(packet);
+    if (err !== null) {
+      throw new Error("argh");
+    }
   },
   db,
 };
